@@ -1,0 +1,11 @@
+[
+    {
+        "product_id": 1,
+        "sku": "P001",
+        "name": "wireless mouse",
+        "price": 1200.0,
+        "quantity": 12,
+        "supplier_id": 1,
+        "warehouse_id": 1
+    }
+]
