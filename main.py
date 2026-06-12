@@ -173,12 +173,93 @@ def stock_out():
 # ---------------- DASHBOARD ----------------
 def dashboard():
     products = load_json(PRODUCTS)
+    suppliers = load_json(SUPPLIERS)
+    warehouses = load_json(WAREHOUSES)
 
-    total_stock = sum(p["quantity"] for p in products)
+    table = Table(title="Inventory Dashboard")
 
-    console.print("\n[bold cyan]INVENTORY DASHBOARD[/bold cyan]")
-    console.print(f"Products: {len(products)}")
-    console.print(f"Total Stock: {total_stock}\n")
+    table.add_column("ID")
+    table.add_column("Product")
+    table.add_column("Stock")
+    table.add_column("Supplier")
+    table.add_column("Warehouse")
+    table.add_column("Location")
+
+    total_stock = 0
+
+    for p in products:
+
+        supplier_name = "Unknown"
+        warehouse_name = "Unknown"
+        warehouse_location = "Unknown"
+
+        for s in suppliers:
+            if s["supplier_id"] == p["supplier_id"]:
+                supplier_name = s["name"]
+                break
+
+        for w in warehouses:
+            if w["warehouse_id"] == p["warehouse_id"]:
+                warehouse_name = w["name"]
+                warehouse_location = w["location"]
+                break
+
+        table.add_row(
+            str(p["product_id"]),
+            p["name"],
+            str(p["quantity"]),
+            supplier_name,
+            warehouse_name,
+            warehouse_location
+        )
+
+        total_stock += p["quantity"]
+
+    console.print(table)
+
+    console.print("\n[bold cyan]SUMMARY[/bold cyan]")
+    console.print(f"Total Products: {len(products)}")
+    console.print(f"Total Suppliers: {len(suppliers)}")
+    console.print(f"Total Warehouses: {len(warehouses)}")
+    console.print(f"Total Stock: {total_stock}")
+
+#-----------------HELP----------------
+
+def help_menu():
+    console.print("\n[bold cyan]HELP GUIDE[/bold cyan]")
+
+    print("1. Add Supplier")
+    print("   - Creates a new supplier.")
+    print("   - Example: Dell, HP, Lenovo")
+
+    print("\n2. List Suppliers")
+    print("   - Displays all suppliers currently stored.")
+
+    print("\n3. Add Warehouse")
+    print("   - Creates a new warehouse.")
+    print("   - Example: Main Warehouse, Nairobi Warehouse")
+
+    print("\n4. Add Product")
+    print("   - Adds a product to inventory.")
+    print("   - Requires Supplier ID and Warehouse ID.")
+
+    print("\n5. List Products")
+    print("   - Displays all products in stock.")
+
+    print("\n6. Stock In")
+    print("   - Increases product quantity.")
+
+    print("\n7. Stock Out")
+    print("   - Reduces product quantity.")
+
+    print("\n8. Search Product")
+    print("   - Finds products by name.")
+
+    print("\n9. Dashboard")
+    print("   - Displays inventory statistics.")
+
+    print("\n0. Exit")
+    print("   - Closes the application.")
 
 
 # ---------------- MENU ----------------
@@ -194,6 +275,7 @@ def menu():
         print("7. Stock Out")
         print("8. Search Product")
         print("9. Dashboard")
+        print("10. Help")   
         print("0. Exit")
 
         choice = input("Choose: ")
@@ -216,6 +298,8 @@ def menu():
             search_product()
         elif choice == "9":
             dashboard()
+        elif choice == "10":
+            help_menu()
         elif choice == "0":
             break
         else:
