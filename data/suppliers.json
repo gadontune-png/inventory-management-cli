@@ -3,5 +3,36 @@
         "supplier_id": 1,
         "name": "Dell",
         "email": "dell@tech.com"
+    },
+    {
+        "supplier_id": 2,
+        "name": "Gad Ontune",
+        "email": "gad@gmail.com"
+    },
+    {
+        "supplier_id": 3,
+        "name": "Gad Ontune",
+        "email": "gad@gmail.com"
+    },
+    {
+        "supplier_id": 4,
+        "name": "kibiro kelvin",
+        "email": "kibiro@gmail.com"
+    },
+    {
+        "supplier_id": 5,
+        "name": "colins orina",
+        "email": "colins@gmail.com",
+        "contact": "0769394694"
+    },
+    {
+        "supplier_id": 6,
+        "name": "tracy",
+        "email": "tracy@gmail.com"
+    },
+    {
+        "name": "james gichana ",
+        "email": "gichana@gmail.com",
+        "supplier_id": 7
     }
 ]

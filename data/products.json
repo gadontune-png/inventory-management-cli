@@ -7,5 +7,14 @@
         "quantity": 12,
         "supplier_id": 1,
         "warehouse_id": 1
+    },
+    {
+        "product_id": 2,
+        "sku": "500",
+        "name": "computer",
+        "price": 8000.0,
+        "quantity": 40,
+        "supplier_id": 6,
+        "warehouse_id": 1
     }
 ]

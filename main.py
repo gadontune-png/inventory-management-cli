@@ -1,6 +1,9 @@
 from utils.storage import load_json, save_json, load_state, save_state
 from rich.console import Console
 from rich.table import Table
+from models.supplier import Supplier
+from models.product import Product
+from models.warehouse import Warehouse
 
 console = Console()
 
@@ -23,14 +26,19 @@ def add_supplier():
     name = input("Name: ")
     email = input("Email: ")
 
+    new_supplier = Supplier(
+        supplier_id=next_id("supplier_id"),
+        name=name,
+        email=email
+    )
+
     data = load_json(SUPPLIERS)
-    data.append({
-        "supplier_id": next_id("supplier_id"),
-        "name": name,
-        "email": email
-    })
+    
+    data.append(new_supplier.to_dict())
+    
     save_json(SUPPLIERS, data)
-    console.print("[green]Supplier added[/green]")
+    console.print("[green]Supplier added [/green]")
+
 
 
 def list_suppliers():
@@ -38,6 +46,7 @@ def list_suppliers():
     table.add_column("ID")
     table.add_column("Name")
     table.add_column("Email")
+    
 
     for s in load_json(SUPPLIERS):
         table.add_row(str(s["supplier_id"]), s["name"], s["email"])
@@ -50,15 +59,19 @@ def add_warehouse():
     name = input("Name: ")
     location = input("Location: ")
 
+    new_warehouse = Warehouse(
+        warehouse_id=next_id("warehouse_id"),
+        name=name,
+        location=location
+    )
+
     data = load_json(WAREHOUSES)
-    data.append({
-        "warehouse_id": next_id("warehouse_id"),
-        "name": name,
-        "location": location
-    })
+    
+    data.append(new_warehouse.to_dict())
 
     save_json(WAREHOUSES, data)
-    console.print("[green]Warehouse added[/green]")
+    console.print("[green]Warehouse added [/green]")
+
 
 
 # ---------------- PRODUCT ----------------
@@ -70,19 +83,21 @@ def add_product():
     supplier_id = int(input("Supplier ID: "))
     warehouse_id = int(input("Warehouse ID: "))
 
-    data = load_json(PRODUCTS)
-    data.append({
-        "product_id": next_id("product_id"),
-        "sku": sku,
-        "name": name,
-        "price": price,
-        "quantity": qty,
-        "supplier_id": supplier_id,
-        "warehouse_id": warehouse_id
-    })
+    new_product = Product(
+        product_id=next_id("product_id"),
+        sku=sku,
+        name=name,
+        price=price,
+        quantity=qty,
+        supplier_id=supplier_id,
+        warehouse_id=warehouse_id
+    )
 
+    data = load_json(PRODUCTS)
+    data.append(new_product.to_dict()) 
     save_json(PRODUCTS, data)
     console.print("[green]Product added[/green]")
+
 
 
 def list_products():
